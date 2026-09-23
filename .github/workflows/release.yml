@@ -20,7 +20,7 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
       - name: Build
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build --parallel --stacktrace
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
