@@ -7,7 +7,7 @@ velocity-api = "3.5.0-SNAPSHOT"
 
 # Общие библиотеки. Adventure предоставляется обеими платформами в рантайме,
 # поэтому в common/api идёт как api-зависимость для компиляции, но из shade-бандлов вырезается.
-adventure = "4.17.0"
+adventure = "5.2.0"
 # Configurate бандлится внутрь каждого платформенного jar через shadowJar с релокацией.
 configurate = "4.2.0"
 # Incendo Cloud v2: ядро в common, платформенные менеджеры в paper/velocity.
