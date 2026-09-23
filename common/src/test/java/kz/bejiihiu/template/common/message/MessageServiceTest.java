@@ -1,6 +1,7 @@
 package kz.bejiihiu.template.common.message;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -41,9 +42,13 @@ class MessageServiceTest {
     @Test
     void prefixedPrependsParsedPrefix() {
         var result = messages.prefixed("<gray>[T]</gray> ", Component.text("hi"));
-        assertEquals(
-                Component.text("[T]", NamedTextColor.GRAY).append(Component.text(" hi")),
-                result);
+        // Поведение, а не внутренности: текст склеился, серый цвет префикса на месте.
+        assertEquals("[T] hi", messages.strip(result));
+        var prefixPart = result.children().stream()
+                .filter(c -> c instanceof TextComponent tc && tc.content().contains("[T]"))
+                .findFirst()
+                .orElseThrow();
+        assertEquals(NamedTextColor.GRAY, prefixPart.color());
     }
 
     @Test

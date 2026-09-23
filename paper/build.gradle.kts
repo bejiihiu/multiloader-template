@@ -34,7 +34,11 @@ tasks {
     }
 
     processResources {
-        val props = mapOf("version" to version, "description" to project.description)
+        // filteringCharset выставлен, но на expand() он не влияет (проверено:
+        // кириллица всё равно бьётся). Правило простое: через expand гоняем
+        // только ASCII (версию), весь не-ASCII лежит в yml литералом.
+        filteringCharset = "UTF-8"
+        val props = mapOf("version" to version)
         filesMatching("paper-plugin.yml") {
             expand(props)
         }

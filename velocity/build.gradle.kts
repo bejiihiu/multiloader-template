@@ -51,6 +51,9 @@ tasks {
 val templateSource = file("src/main/templates")
 val templateDest = layout.buildDirectory.dir("generated/sources/templates")
 val generateTemplates = tasks.register<Copy>("generateTemplates") {
+    // Комменты в шаблоне только ASCII: expand() читает файл в кодировке платформы,
+    // не-ASCII превращается в кракозябры независимо от filteringCharset.
+    filteringCharset = "UTF-8"
     val props = mapOf("version" to project.version)
     inputs.properties(props)
 

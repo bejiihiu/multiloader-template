@@ -55,13 +55,28 @@ public final class ConfigManager {
                 copyDefault();
             }
             var node = loader.load();
-            var loaded = node.get(PluginConfig.class, PluginConfig.defaults());
-            // Самовосстановление: новых ключей в старых файлах нет, дописываем.
-            node.set(PluginConfig.class, loaded);
+            // Читаем поключево с дефолтами, а не маппим весь объект разом: так отсутствующие
+            // ключи (включая вложенные) подхватывают значения по умолчанию вместо null,
+            // а неизвестные ключи пользователя остаются в файле нетронутыми.
+            var def = PluginConfig.defaults();
+            var welcomeNode = node.node("welcome");
+            var welcomeDef = def.welcome();
+            var loaded = new PluginConfig(
+                    node.node("prefix").getString(def.prefix()),
+                    node.node("debug").getBoolean(def.debug()),
+                    new PluginConfig.Welcome(
+                            welcomeNode.node("enabled").getBoolean(welcomeDef.enabled()),
+                            welcomeNode.node("message").getString(welcomeDef.message())));
+            // Самовосстановление: дописываем то, чего в файле не было.
+            node.node("prefix").set(String.class, loaded.prefix());
+            node.node("debug").set(Boolean.class, loaded.debug());
+            welcomeNode.node("enabled").set(Boolean.class, loaded.welcome().enabled());
+            welcomeNode.node("message").set(String.class, loaded.welcome().message());
             loader.save(node);
             config = loaded;
             return true;
-        } catch (IOException | ConfigurateException e) {
+        } catch (IOException e) {
+            // ConfigurateException наследник IOException, один catch покрывает и битый YAML, и ошибки диска.
             logger.warn("Не вышло перечитать config.yml ({}), остаёмся на предыдущем конфиге", file, e);
             return false;
         }

@@ -16,13 +16,16 @@ dependencies {
 
     // Configurate бандлится в каждый платформенный jar с релокацией, транзитивно тянет snakeyaml.
     implementation(libs.configurate.yaml)
+    // Plain-сериализатор для strip(): в сигнатурах не торчит, поэтому implementation.
+    implementation(libs.adventure.plain)
 
     compileOnly(libs.slf4j.api)
     compileOnly(libs.annotations)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
-    testImplementation(libs.adventure.plain)
+    // Лаунчер нужен Gradle раннеру, сам junit-jupiter его не тянет.
+    testRuntimeOnly(libs.junit.launcher)
     testImplementation(libs.configurate.yaml)
     testImplementation(libs.slf4j.simple)
 }

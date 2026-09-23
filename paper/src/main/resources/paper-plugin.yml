@@ -1,5 +1,8 @@
 name: multiloader-template
-description: $description
+# Описание лежит литералом осознанно: пропускать не-ASCII через expand() нельзя,
+# Gradle читает шаблон в кодировке платформы и кириллица превращается в кракозябры.
+# Версия ниже ASCII-символами, её подставляет сборка.
+description: я люблю арину btw, это моя бывшая
 version: '${version}'
 
 main: kz.bejiihiu.template.paper.TemplatePaperPlugin

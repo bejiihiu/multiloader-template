@@ -10,9 +10,12 @@ velocity-api = "3.5.0-SNAPSHOT"
 adventure = "4.17.0"
 # Configurate бандлится внутрь каждого платформенного jar через shadowJar с релокацией.
 configurate = "4.2.0"
-# Incendo Cloud v2: ядро в common, платформенные менеджеры в paper/velocity. Версии ядра
-# и платформенных артефактов обязаны совпадать, поэтому одна запись в каталоге.
-cloud = "2.0.1"
+# Incendo Cloud v2: ядро в common, платформенные менеджеры в paper/velocity.
+# Ядро и платформы версионируются отдельно: cloud-core 2.1.0 это то, против чего
+# собраны cloud-paper/cloud-velocity 2.0.1 (см. их POM). Разводить версии руками
+# не надо, но и сливать в одну запись нельзя — такого артефакта просто нет.
+cloud-core = "2.1.0"
+cloud-platform = "2.0.1"
 slf4j = "2.0.13"
 # Аннотации nullability для публичных сигнатур. compileOnly: в рантайме не нужны.
 annotations = "24.1.0"
@@ -33,9 +36,9 @@ adventure-plain = { module = "net.kyori:adventure-text-serializer-plain", versio
 
 configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
 
-cloud-core = { module = "org.incendo:cloud-core", version.ref = "cloud" }
-cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud" }
-cloud-velocity = { module = "org.incendo:cloud-velocity", version.ref = "cloud" }
+cloud-core = { module = "org.incendo:cloud-core", version.ref = "cloud-core" }
+cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud-platform" }
+cloud-velocity = { module = "org.incendo:cloud-velocity", version.ref = "cloud-platform" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
@@ -44,6 +47,7 @@ annotations = { module = "org.jetbrains:annotations", version.ref = "annotations
 
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
