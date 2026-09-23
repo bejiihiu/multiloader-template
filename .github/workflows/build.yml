@@ -21,7 +21,7 @@ jobs:
         # (В gradle.properties тоже стоит org.gradle.parallel=true, это дубль для ясности.)
         run: ./gradlew build --parallel --stacktrace
       - name: Upload jars
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: jars-${{ github.sha }}
           path: |
