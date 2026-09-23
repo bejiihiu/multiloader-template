@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # JDK 21 хватает: тулчейн 25 для paper-модуля Gradle докачает сам.
       - uses: actions/setup-java@v4
         with:
