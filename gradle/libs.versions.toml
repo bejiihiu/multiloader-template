@@ -1,0 +1,51 @@
+[versions]
+# Платформы. paper-api задаёт минимальную версию Paper для paper-модуля,
+# velocity-api — минимальную версию Velocity для velocity-модуля.
+minecraft = "26.3"
+paper-api = "26.3.build.+"
+velocity-api = "3.5.0-SNAPSHOT"
+
+# Общие библиотеки. Adventure предоставляется обеими платформами в рантайме,
+# поэтому в common/api идёт как api-зависимость для компиляции, но из shade-бандлов вырезается.
+adventure = "4.17.0"
+# Configurate бандлится внутрь каждого платформенного jar через shadowJar с релокацией.
+configurate = "4.2.0"
+# Incendo Cloud v2: ядро в common, платформенные менеджеры в paper/velocity. Версии ядра
+# и платформенных артефактов обязаны совпадать, поэтому одна запись в каталоге.
+cloud = "2.0.1"
+slf4j = "2.0.13"
+# Аннотации nullability для публичных сигнатур. compileOnly: в рантайме не нужны.
+annotations = "24.1.0"
+
+shadow = "9.6.1"
+run-task = "3.1.0"
+
+# Тесты. junit-bom выравнивает версии всех jupiter-артефактов.
+junit = "5.11.4"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
+velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity-api" }
+
+adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
+
+configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
+
+cloud-core = { module = "org.incendo:cloud-core", version.ref = "cloud" }
+cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud" }
+cloud-velocity = { module = "org.incendo:cloud-velocity", version.ref = "cloud" }
+
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-task" }
+run-velocity = { id = "xyz.jpenilla.run-velocity", version.ref = "run-task" }

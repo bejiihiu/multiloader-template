@@ -1,0 +1,13 @@
+# Главный конфиг плагина. Всё в MiniMessage-формате, шпаргалка: https://webui.advntr.dev/
+# Удаляешь ключи — они вернутся со значениями по умолчанию при следующем старте/reload.
+
+# Префикс всех сообщений плагина
+prefix: "<gray>[<gradient:#7ed6ff:#4a9eff>Template</gradient>]</gray> "
+
+# Подробные логи ядра
+debug: false
+
+# Приветствие при входе, <player> подставится автоматически
+welcome:
+  enabled: true
+  message: "<green>Привет, <player>! Добро пожаловать на сервер :)"

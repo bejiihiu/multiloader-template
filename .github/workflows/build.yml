@@ -1,0 +1,28 @@
+name: build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # JDK 21 хватает: тулчейн 25 для paper-модуля Gradle докачает сам.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build and test
+        run: ./gradlew build --stacktrace
+      - name: Upload jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: jars-${{ github.sha }}
+          path: |
+            paper/build/libs/*.jar
+            velocity/build/libs/*.jar
+          if-no-files-found: error

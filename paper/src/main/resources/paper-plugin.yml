@@ -1,0 +1,12 @@
+name: multiloader-template
+description: $description
+version: '${version}'
+
+main: kz.bejiihiu.template.paper.TemplatePaperPlugin
+bootstrapper: kz.bejiihiu.template.paper.TemplatePaperBootstrap
+loader: kz.bejiihiu.template.paper.TemplatePaperLoader
+api-version: '26.3'
+load: POSTWORLD
+
+authors: [ bejiihiu.xs ]
+website: https://devfolia.t.me/
