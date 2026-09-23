@@ -7,6 +7,12 @@ updates:
     groups:
       gradle-wrapper:
         patterns: ["gradle-wrapper"]
+    # Мажоры Adventure не предлагать: либа идёт в provided-scope (рантайм дают
+    # Paper/Velocity 4.x), апгрейд до 5.x грозит NoSuchMethodError на серверах.
+    # Миноры и патчи едут как обычно.
+    ignore:
+      - dependency-name: "net.kyori:*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
