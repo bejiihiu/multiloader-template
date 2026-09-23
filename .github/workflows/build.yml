@@ -17,7 +17,9 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v6
       - name: Build and test
-        run: ./gradlew build --stacktrace
+        # --parallel явно: модули независимые, пусть собираются рядом.
+        # (В gradle.properties тоже стоит org.gradle.parallel=true, это дубль для ясности.)
+        run: ./gradlew build --parallel --stacktrace
       - name: Upload jars
         uses: actions/upload-artifact@v4
         with:
