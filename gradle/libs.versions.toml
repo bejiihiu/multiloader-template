@@ -18,7 +18,7 @@ cloud-core = "2.1.0"
 cloud-platform = "2.0.1"
 slf4j = "2.0.19"
 # Аннотации nullability для публичных сигнатур. compileOnly: в рантайме не нужны.
-annotations = "24.1.0"
+annotations = "26.1.0"
 
 shadow = "9.6.1"
 run-task = "3.1.0"
