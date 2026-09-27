@@ -28,7 +28,7 @@ import java.time.Duration;
         id = "multiloader-template",
         name = "multiloader-template",
         version = BuildConstants.VERSION,
-        description = "я люблю арину btw, это моя бывшая",
+        description = "Paper + Velocity plugin from a single codebase.",
         url = "https://devfolia.t.me/",
         authors = {"bejiihiu.xs"}
 )

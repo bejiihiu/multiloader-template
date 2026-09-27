@@ -2,7 +2,8 @@ name: build
 
 on:
   push:
-    branches: [main, master]
+    # dev собираем тоже: релизы готовятся там, ломать его втихаря нельзя
+    branches: [main, master, dev]
   pull_request:
 
 jobs:
