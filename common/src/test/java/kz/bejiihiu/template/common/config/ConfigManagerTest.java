@@ -65,4 +65,17 @@ class ConfigManagerTest {
         // И файл тоже починился: ключ welcome дописался.
         assertTrue(Files.readString(temp.resolve("config.yml")).contains("welcome:"));
     }
+
+    @Test
+    void legacyConfigWithoutVersionGetsStamped() throws Exception {
+        var manager = manager();
+        assertTrue(manager.reload());
+        // Конфиг эпохи до версий: ключа config-version нет вообще.
+        Files.writeString(temp.resolve("config.yml"), "prefix: \"[Z] \"\ndebug: false\nwelcome:\n  enabled: true\n  message: \"hi\"\n");
+        assertTrue(manager.reload());
+        // Миграции отработали: версия проставлена, значения пользователя целы.
+        assertTrue(Files.readString(temp.resolve("config.yml"))
+                .contains("config-version: " + ConfigMigrations.CURRENT_VERSION));
+        assertEquals("[Z] ", manager.current().prefix());
+    }
 }

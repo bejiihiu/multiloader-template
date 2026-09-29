@@ -32,6 +32,13 @@ tasks {
         archiveBaseName.set("multiloader-template-velocity")
         // Склеиваем META-INF/services всех либ (Configurate, Cloud), иначе SPI провайдеры потеряются.
         mergeServiceFiles()
+        // Без этого Shadow 9.x режет дубликаты service-файлов до того как их увидит
+        // трансформер (ворнинг при сборке) — провайдеры Configurate/Cloud теряются.
+        // Приём у milkdrinkers (фикс service file merging): дубликаты пропускаем
+        // внутрь, склейкой занимается сам трансформер.
+        filesMatching("META-INF/services/**") {
+            duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        }
         // Всё своё тащим под своим пакетом, чтобы не конфликтовать с другими плагинами.
         relocate("org.spongepowered.configurate", "kz.bejiihiu.template.libs.configurate")
         relocate("org.yaml.snakeyaml", "kz.bejiihiu.template.libs.snakeyaml")
