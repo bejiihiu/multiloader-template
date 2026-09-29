@@ -38,7 +38,7 @@ tasks {
         relocate("io.leangen.geantyref", "kz.bejiihiu.template.libs.geantyref")
         relocate("org.incendo.cloud", "kz.bejiihiu.template.libs.cloud")
         dependencies {
-            // Даёт прокси: Adventure, slf4j и аннотации в jar не кладём.
+            // Даёт прокси (Velocity 4 везёт Adventure 5): Adventure, slf4j и аннотации в jar не кладём.
             exclude(dependency("net.kyori:.*:.*"))
             exclude(dependency("org.slf4j:.*:.*"))
             exclude(dependency("org.jetbrains:annotations:.*"))

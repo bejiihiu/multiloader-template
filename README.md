@@ -19,7 +19,7 @@ One command tree (`/template ping|version|reload`) is defined once in
 ## Requirements
 
 - JDK 25 to build (Gradle downloads the toolchain automatically if missing).
-- Paper 26.3+ for the paper jar, Velocity 3.5+ for the velocity jar.
+- Paper 26.3+ for the paper jar, Velocity 4.2+ for the velocity jar.
 
 ## Build & run
 
