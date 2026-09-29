@@ -1,6 +1,7 @@
 package kz.bejiihiu.template.common;
 
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import java.util.Objects;
  */
 public record CoreContext(
         @NotNull Path dataDirectory,
-        @NotNull org.slf4j.Logger logger,
+        @NotNull Logger logger,
         @NotNull String version
 ) {
     public CoreContext {

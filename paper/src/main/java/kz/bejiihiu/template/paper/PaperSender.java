@@ -1,8 +1,8 @@
 package kz.bejiihiu.template.paper;
 
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import net.kyori.adventure.text.Component;
 import kz.bejiihiu.template.common.command.TemplateSender;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

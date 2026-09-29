@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -77,5 +81,22 @@ class ConfigManagerTest {
         assertTrue(Files.readString(temp.resolve("config.yml"))
                 .contains("config-version: " + ConfigMigrations.CURRENT_VERSION));
         assertEquals("[Z] ", manager.current().prefix());
+    }
+
+    @Test
+    void concurrentReloadsStayConsistent() throws Exception {
+        var manager = manager();
+        assertTrue(manager.reload());
+        // 32 параллельных reload: все успешны, конфиг в конце читаем и цел.
+        try (var pool = Executors.newFixedThreadPool(8)) {
+            var futures = new ArrayList<Future<Boolean>>();
+            for (int i = 0; i < 32; i++) {
+                futures.add(pool.submit(manager::reload));
+            }
+            for (var f : futures) {
+                assertTrue(f.get(10, TimeUnit.SECONDS));
+            }
+        }
+        assertEquals(PluginConfig.defaults().prefix(), manager.current().prefix());
     }
 }
