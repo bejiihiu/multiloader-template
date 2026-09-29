@@ -2,7 +2,7 @@
 
 Paper + Velocity plugin from a single codebase. Shared logic lives in `common`,
 platform modules are thin adapters. Built with Gradle (Kotlin DSL), Java 25,
-Adventure MiniMessage, Configurate and Incendo Cloud v2.
+Adventure 5 MiniMessage, Configurate and Incendo Cloud v2.
 
 ## Modules
 
@@ -46,6 +46,8 @@ Commands are registered by Cloud itself — do not list them in `paper-plugin.ym
 
 `config.yml` is created from bundled defaults on first start. Missing keys heal
 themselves on reload; a broken file keeps the last good config and logs a warning.
+The schema is versioned (`config-version` key): old files migrate automatically
+on load, new migrations go into `ConfigMigrations`.
 
 ## Make it yours
 
