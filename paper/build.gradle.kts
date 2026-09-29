@@ -17,12 +17,6 @@ dependencies {
     implementation(libs.cloud.paper)
 }
 
-java {
-    // paper-api 26.x скомпилирован под Java 25: javac младшей версии
-    // не прочитает даже его классы, поэтому тут тулчейн 25, а не 21.
-    toolchain.languageVersion = JavaLanguageVersion.of(25)
-}
-
 tasks {
     build {
         dependsOn(shadowJar)

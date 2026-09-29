@@ -1,7 +1,7 @@
 # multiloader-template
 
 Paper + Velocity plugin from a single codebase. Shared logic lives in `common`,
-platform modules are thin adapters. Built with Gradle (Kotlin DSL), Java 21,
+platform modules are thin adapters. Built with Gradle (Kotlin DSL), Java 25,
 Adventure MiniMessage, Configurate and Incendo Cloud v2.
 
 ## Modules
@@ -18,8 +18,7 @@ One command tree (`/template ping|version|reload`) is defined once in
 
 ## Requirements
 
-- JDK 21 to build. The paper module compiles with a Java 25 toolchain
-  (required by paper-api 26.x) — Gradle downloads it automatically.
+- JDK 25 to build (Gradle downloads the toolchain automatically if missing).
 - Paper 26.3+ for the paper jar, Velocity 3.5+ for the velocity jar.
 
 ## Build & run

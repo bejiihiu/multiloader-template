@@ -1,5 +1,5 @@
 // Общие конвенции для всех модулей: Java, кодировка, тесты.
-// Платформенные тонкости (тулчейн paper, shade, раннеры) живут в build-файлах самих модулей.
+// Платформенные тонкости (shade, раннеры) живут в build-файлах самих модулей.
 import org.gradle.api.plugins.JavaPluginExtension
 
 subprojects {
@@ -9,10 +9,10 @@ subprojects {
     version = rootProject.version
 
     extensions.configure<JavaPluginExtension> {
-        // Базовый тулчейн 21 для common/api/velocity.
-        // paper-модуль переопределяет на 25: paper-api 26.x скомпилирован под 25,
-        // javac младшей версии такие классы даже прочитать не может.
-        toolchain.languageVersion = JavaLanguageVersion.of(21)
+        // Единый тулчейн 25 на все модули: paper-api 26.x и velocity-api 4.x
+        // скомпилированы под 25, javac младшей версии их классы даже прочитать не может.
+        // Недостающий JDK Gradle докачивает сам через Foojay-резолвер из settings.gradle.kts.
+        toolchain.languageVersion = JavaLanguageVersion.of(25)
     }
 
     tasks.withType<JavaCompile> {
