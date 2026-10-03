@@ -1,8 +1,8 @@
 # multiloader-template
 
 Paper + Velocity plugin from a single codebase. Shared logic lives in `common`,
-platform modules are thin adapters. Built with Gradle (Kotlin DSL), Java 21,
-Adventure MiniMessage, Configurate and Incendo Cloud v2.
+platform modules are thin adapters. Built with Gradle (Kotlin DSL), Java 25,
+Adventure 5 MiniMessage, Configurate and Incendo Cloud v2.
 
 ## Modules
 
@@ -18,9 +18,8 @@ One command tree (`/template ping|version|reload`) is defined once in
 
 ## Requirements
 
-- JDK 21 to build. The paper module compiles with a Java 25 toolchain
-  (required by paper-api 26.x) — Gradle downloads it automatically.
-- Paper 26.3+ for the paper jar, Velocity 3.5+ for the velocity jar.
+- JDK 25 to build (Gradle downloads the toolchain automatically if missing).
+- Paper 26.3+ for the paper jar, Velocity 4.2+ for the velocity jar.
 
 ## Build & run
 
@@ -47,6 +46,8 @@ Commands are registered by Cloud itself — do not list them in `paper-plugin.ym
 
 `config.yml` is created from bundled defaults on first start. Missing keys heal
 themselves on reload; a broken file keeps the last good config and logs a warning.
+The schema is versioned (`config-version` key): old files migrate automatically
+on load, new migrations go into `ConfigMigrations`.
 
 ## Make it yours
 

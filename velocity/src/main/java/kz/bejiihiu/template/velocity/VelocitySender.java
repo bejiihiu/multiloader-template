@@ -1,6 +1,7 @@
 package kz.bejiihiu.template.velocity;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import kz.bejiihiu.template.common.command.TemplateSender;
 import org.jetbrains.annotations.NotNull;
@@ -24,10 +25,11 @@ final class VelocitySender implements TemplateSender {
 
     @Override
     public @NotNull String name() {
-        if (source instanceof com.velocitypowered.api.proxy.Player player) {
-            return player.getUsername();
-        }
-        return "console";
+        // Паттерн-матчинг в switch: консоль и прочие не-игроки падают в default.
+        return switch (source) {
+            case Player player -> player.getUsername();
+            default -> "console";
+        };
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Загрузка и перезагрузка config.yml.
@@ -30,6 +31,11 @@ public final class ConfigManager {
 
     private volatile PluginConfig config = PluginConfig.defaults();
 
+    // ReentrantLock вместо synchronized на методе: reload делает блокирующий
+    // файловый IO, а дёрнуть его могут и с виртуальных нитей (хендлеры команд
+    // Cloud выполняются не на loop-нити) — Lock carrier-нити не паркует.
+    private final ReentrantLock lock = new ReentrantLock();
+
     public ConfigManager(@NotNull Path dataDirectory, @NotNull Logger logger) {
         Objects.requireNonNull(dataDirectory, "dataDirectory");
         this.logger = Objects.requireNonNull(logger, "logger");
@@ -48,13 +54,18 @@ public final class ConfigManager {
      *
      * @return true если перечитали без ошибок
      */
-    public synchronized boolean reload() {
+    public boolean reload() {
+        lock.lock();
         try {
             Files.createDirectories(file.getParent());
             if (Files.notExists(file)) {
                 copyDefault();
             }
             var node = loader.load();
+            // Сначала миграции по версии схемы (файлы эпохи до версий считаются v0),
+            // потом чтение поключево с дефолтами. Порядок важен: миграция может
+            // переименовать ключи, а хилер ниже допишет только то, чего не хватает.
+            ConfigMigrations.migrations().apply(node);
             // Читаем поключево с дефолтами, а не маппим весь объект разом: так отсутствующие
             // ключи (включая вложенные) подхватывают значения по умолчанию вместо null,
             // а неизвестные ключи пользователя остаются в файле нетронутыми.
@@ -79,6 +90,8 @@ public final class ConfigManager {
             // ConfigurateException наследник IOException, один catch покрывает и битый YAML, и ошибки диска.
             logger.warn("Не вышло перечитать config.yml ({}), остаёмся на предыдущем конфиге", file, e);
             return false;
+        } finally {
+            lock.unlock();
         }
     }
 

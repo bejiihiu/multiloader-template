@@ -3,11 +3,14 @@
 # velocity-api — минимальную версию Velocity для velocity-модуля.
 minecraft = "26.3"
 paper-api = "26.3.build.+"
-velocity-api = "3.5.0-SNAPSHOT"
+# Velocity 4.2.0 — первый стабильный релиз 4.x (раньше был только SNAPSHOT).
+# Требует Java 25 в рантайме, что совпадает с нашим тулчейном.
+velocity-api = "4.2.0"
 
-# Общие библиотеки. Adventure предоставляется обеими платформами в рантайме,
-# поэтому в common/api идёт как api-зависимость для компиляции, но из shade-бандлов вырезается.
-adventure = "4.26.1"
+# Общие библиотеки. Adventure 5 предоставляется обеими платформами в рантайме
+# (Paper 26.x и Velocity 4.x), поэтому в common/api идёт как api-зависимость
+# для компиляции, но из shade-бандлов вырезается.
+adventure = "5.2.0"
 # Configurate бандлится внутрь каждого платформенного jar через shadowJar с релокацией.
 configurate = "4.2.0"
 # Incendo Cloud v2: ядро в common, платформенные менеджеры в paper/velocity.

@@ -24,7 +24,8 @@ public final class TemplatePaperPlugin extends JavaPlugin implements Listener {
         // выполняется на сервере, отменяется при выключении.
         getServer().getGlobalRegionScheduler().runAtFixedRate(
                 this,
-                task -> getSLF4JLogger().debug("Тик ядра, конфиг: debug={}", core.config().debug()),
+                // Параметр шедулера не используется — безымянная переменная _ (Java 22+).
+                _ -> getSLF4JLogger().debug("Тик ядра, конфиг: debug={}", core.config().debug()),
                 20L,
                 20L * 60L);
     }

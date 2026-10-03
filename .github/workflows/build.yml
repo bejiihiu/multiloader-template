@@ -2,7 +2,8 @@ name: build
 
 on:
   push:
-    branches: [main, master]
+    # dev собираем тоже: релизы готовятся там, ломать его втихаря нельзя
+    branches: [main, master, dev]
   pull_request:
 
 jobs:
@@ -10,11 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      # JDK 21 хватает: тулчейн 25 для paper-модуля Gradle докачает сам.
+      # JDK 25 основной: все модули собираются тулчейном 25.
+      # (Foojay-резолвер докачает его и сам, но в CI быстрее ставить нужный сразу.)
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 25
       - uses: gradle/actions/setup-gradle@v6
       - name: Build and test
         # --parallel явно: модули независимые, пусть собираются рядом.
